@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import views
+from qa.views import *
 
 urlpatterns = [
     url(r'^$', views.test),
