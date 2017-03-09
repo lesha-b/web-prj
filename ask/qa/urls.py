@@ -4,7 +4,7 @@ from qa.views import *
 urlpatterns = [
     url(r'^$', test),
     url(r'^login/$', test),
-    url(r'^singup/$', test),
+    url(r'^signup/$', test),
     url(r'^question/(\d+)/$', test),
     url(r'^ask/$', test),
     url(r'^popular/$', test),
