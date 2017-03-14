@@ -9,13 +9,13 @@ def test(request, *args, **kwargs):
 
 @require_GET
 def index(request):
-	questions = Question.objects.new()
+	questions = Question.objects.order_by('-id')
 	page, paginator = paginate(request, questions)
 	paginator.baseurl = '/?page='
 	return render(request, 'index.html',{
 		'questions': page.object_list,
 		'paginator': paginator,
-		'page': page
+		'page': page,
 		})
 
 @require_GET
@@ -26,14 +26,14 @@ def popular(request):
 	return render(request, 'index.html',{
 		'questions': page.object_list,
 		'paginator': paginator,
-		'page': page
+		'page': page,
 		})
 
 @require_GET
 def show_question(request, id):
-	question = get_object_or_404(Question, id=id)
-	answers = Answer.objects.filter(question=question)
+	question = get_object_or_404(Question, id=question_id)
+	answers = question.answer_set.all()
 	return render(request, 'question.html',{
 		'question': question,
-		'answers': answers
+		'answers': answers,
 		})
