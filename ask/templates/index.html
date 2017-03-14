@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<nav>
+	<ul class="pagination">
+		{% for p in paginator.page_range %}
+			{% if p == page.number %}
+			    <li class="active">
+			{% else %}
+			    <li>
+			{% endif %}
+			    <a href="{{ paginator.baseurl }}{{ p }}">{{  p  }}</a>
+			    </li>
+		{% endfor %}
+	</ul>
+</nav>
+<hr>
+<div class="row">
+	<ul>
+		{% for question in questions %}
+		<li>
+			{{question.title}}<br>
+			<a href='{{question.get_url}}'>Подробнее</a>
+		</li>
+		{% endfor %}	
+	</ul>
+</div>
+{% endblock %}
