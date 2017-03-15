@@ -22,7 +22,7 @@
       <h3>{{ question.title }}</h3>
       <p>{{ question.text }}</p>
       <ul>
-       {% for answer in answers %}
+       {% for answer in question.answer_set.all() %}
        <li>{{ answer.text }}</li>
        <hr>
        {% endfor %}

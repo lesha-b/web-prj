@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.views.decorators.http import require_GET
 from .models import Question, Answer
 from .utils.sh_paginate import paginate
@@ -31,9 +31,10 @@ def popular(request):
 
 @require_GET
 def show_question(request, id):
-	question = get_object_or_404(Question, id=id)
-	answers = Answer.objects.sorting(id)
+	try:
+		question = Question.objects.get(id=id)
+	except Question.DoesNotExist:
+		raise Http404
 	return render(request, 'question.html',{
 		'question': question,
-		'answers': answers,
 		})
