@@ -31,3 +31,25 @@ class AnswerForm(forms.Form):
 		comment = Answer(** self.cleaned_data)
 		comment.save()
 		return comment
+
+class SignupForm(forms.Form):
+	username = forms.CharField(max_length=100)
+	first_name=forms.CharField(max_length=100, required=False)
+	last_name=forms.CharField(max_length=100, required=False)
+	email = forms.EmailField(required=False)
+	password = forms.CharField(widget=forms.PasswordInput)
+
+	def clean_username(self):
+		username = self.cleaned_data['username']
+		if len(username) < 3:
+			raise forms.ValidationError('Username is too small')
+		return username
+
+	def clean_password(self):
+		password = self.cleaned_data['password']
+		if len(password) < 3:
+			raise forms.ValidationError('Password is too small')
+		return password
+
+	def save(self):
+		return User.objects.create_user(**self.cleaned_data)

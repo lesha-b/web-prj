@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+    	<form class="form-horizontal" method="post" action="/signup/">
+    		<fieldset>
+    		{% csrf_token %}
+   			 {% for f in form %}
+    		<div class='control-group'>
+    			<label class="control-label">{{f.label}}</label>
+    			<div class="contols">{{f}}</div>
+    		</div>
+   			{% endfor %}
+    		</fieldset>
+    		<div class="form-actions"><button type="submit" class="btn btn-primary">SAVE</button></div>
+    	</form>
+    </div>
+{% endblock %}
