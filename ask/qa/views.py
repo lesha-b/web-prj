@@ -4,7 +4,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from qa.models import Question, Answer
-from qa.forms import AskForm, AnswerForm, SignupForm
+from qa.forms import AskForm, AnswerForm, SignupForm, LoginForm
 from .utils.sh_paginate import paginate
 
 def test(request, *args, **kwargs):
@@ -74,10 +74,23 @@ def signup(request):
 		if form.is_valid():
 			user = form.save()
 			auth_user = authenticate(username=user.username, password=form.cleaned_data['password'])
-			login(request,auth_user)
+			login(request, auth_user)
 			return HttpResponseRedirect('/')
 	else:
 		form = SignupForm()
 	return render(request, 'signup.html',{
 		'form': form
 		})
+
+def login_view(request):
+	if request.method == "POST":
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			return HttpResponseRedirect('/')
+	else:
+		form = LoginForm()
+		return render(request, 'login.html',{
+			'form': form
+			})
